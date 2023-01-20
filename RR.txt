@@ -1,0 +1,40 @@
+
+Scheduler tick : 19:26:15
+	Motors control : Starting task (19:26:15)
+	Motors control : Ending task (19:26:15)
+
+Scheduler tick : 19:26:21
+	Sensor acquisition : Starting task (19:26:21)
+	Sensor acquisition : Ending task (19:26:21)
+
+Scheduler tick : 19:26:27
+	Transmission system : Starting task (19:26:27)
+	Transmission system : Ending task (19:26:27)
+
+Scheduler tick : 19:26:52
+	Camera analaysis : Starting task (19:26:52)
+	Camera analaysis : Ending task (19:26:52)
+
+Scheduler tick : 19:27:17
+	Motors control : Starting task (19:27:17)
+	Motors control : Ending task (19:27:17)
+
+Scheduler tick : 19:27:23
+	Sensor acquisition : Starting task (19:27:23)
+	Sensor acquisition : Ending task (19:27:23)
+
+Scheduler tick : 19:27:29
+	Transmission system : Starting task (19:27:29)
+	Transmission system : Ending task (19:27:29)
+
+Scheduler tick : 19:27:54
+	Camera analaysis : Starting task (19:27:54)
+	Camera analaysis : Ending task (19:27:54)
+
+Scheduler tick : 19:28:19
+	Motors control : Starting task (19:28:19)
+	Motors control : Ending task (19:28:19)
+
+Scheduler tick : 19:28:25
+	Sensor acquisition : Starting task (19:28:25)
+	Sensor acquisition : Ending task (19:28:25)
