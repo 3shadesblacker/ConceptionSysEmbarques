@@ -72,7 +72,7 @@ if __name__ == '__main__':
         for i in range(0, len(task_list)):
             current_task = task_list[i]
             current_task_next_deadline = current_task.last_execution_time + datetime.timedelta(seconds=current_task.period)
-            next_task = task_list[i+1] if (i < 3) else task_list[0]
+            next_task = task_list[i+1] if (i < len(task_list) - 1) else task_list[0]
             next_task_next_deadline = next_task.last_execution_time + datetime.timedelta(seconds=next_task.period)
 
             print("\tDeadline for task " + current_task.name + " : " + current_task_next_deadline.strftime("%H:%M:%S"))
