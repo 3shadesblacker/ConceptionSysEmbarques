@@ -12,10 +12,10 @@ class my_task():
     period = -1
     execution_time = -1
     last_deadline = -1
-    last_execution_time = str(None)
-    executed_time = 0
-    max_execution_time = 0
-    max_period = 0
+    last_execution_time = datetime.timedelta()
+    executed_time = -1
+    max_execution_time = -1
+    max_period = -1
 
 
         ############################################################################
@@ -39,15 +39,25 @@ class my_task():
     def run(self):
 
         # Update last_execution_time
-        #Exécution des tâches dans le run
-        
         self.last_execution_time = datetime.datetime.now()
 
+        #Execution de la tâche
         print("\t" + self.name + " : Starting task (" + self.last_execution_time.strftime("%H:%M:%S") + ")")
-
         time.sleep(self.execution_time)
-
         print("\t" + self.name + " : Ending task (" + datetime.datetime.now().strftime("%H:%M:%S") + ")")
+    
+
+    def get_next_task(self, task_list: list):
+        next_task = self
+        current_task_next_deadline = next_task.last_execution_time + datetime.timedelta(seconds=next_task.period)
+        for task in task_list:
+            next_task_next_deadline = task.last_execution_time + datetime.timedelta(seconds=task.period)
+            # Si la tâche a la priorité sur celle ci, elle est la prochaine
+            if (next_task_next_deadline < current_task_next_deadline or
+                (next_task_next_deadline == current_task_next_deadline and task.priority > next_task.priority)):
+                next_task = task
+        return next_task
+
 
 
 
@@ -85,20 +95,25 @@ if __name__ == '__main__':
 
         #Boucle qui parcours le tableau des tâches 
         for i in range(0, len(task_list)):
-            #Recupère la prochaine tâche
             current_task = task_list[i]
+
+            # La tâche s'est entièrement effectuée précédemment, la période et le temps d'éxécution sont remis à 0
             if (current_task.period == 0):
                 current_task.period = current_task.max_period
                 current_task.execution_time = current_task.max_execution_time
+
+            # La tâche n'aura pas le temps de s'éxécuter dans sa période
             if (current_task.period > current_task.execution_time):
-                next_task = task_list[i+1] if (i < len(task_list) - 1) else task_list[0]
+                next_task = current_task.get_next_task(task_list)
                 current_task.period -= next_task.execution_time
+                print("\tTask execution at {}%", current_task.execution_time/current_task.period * 100)
                 current_task.execution_time = 0
                 continue
+                
             # obtention de la deadline de la tâche
             current_task_next_deadline = current_task.last_execution_time + datetime.timedelta(seconds=current_task.period)
             # récupère la prochaine tache
-            next_task = task_list[i+1] if (i < len(task_list) - 1) else task_list[0]
+            next_task = current_task.get_next_task(task_list)
             # obtention de la prochaine deadline de la tâche suivante
             next_task_next_deadline = next_task.last_execution_time + datetime.timedelta(seconds=next_task.period)
 
@@ -110,15 +125,13 @@ if __name__ == '__main__':
                 task_to_run = current_task
             
             # si la priorité de la tâche suivante est plus importante et que la tâche va être interrompue
-            if (current_task.priority < next_task.priority 
-            and datetime.timedelta(seconds=next_task_next_deadline) < datetime.timedelta(seconds=current_task.execution_time)):
-                print("Preemption de {} over {}".format(task_to_run.name, next_task.name))
+            if (current_task.priority > next_task.priority):
+                print("Preemption of {} over {}".format(task_to_run.name, next_task.name))
                 task_to_run = next_task
                 # calcul du temps déjà exécuté pour la tâche actuelle
                 current_task.execution_time -= current_task.executed_time
                 current_task.period -= current_task.executed_time + next_task.execution_time
                 time.sleep(next_task.execution_time)
-
-
+                
         # Start task
         task_to_run.run()
