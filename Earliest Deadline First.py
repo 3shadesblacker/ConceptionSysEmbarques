@@ -7,7 +7,7 @@ import datetime
 class my_task():
 
     #Préconfiguration
-    name = str(None)
+    name = ""
     priority = -1
     period = -1
     execution_time = -1
@@ -103,10 +103,10 @@ if __name__ == '__main__':
                 current_task.execution_time = current_task.max_execution_time
 
             # La tâche n'aura pas le temps de s'éxécuter dans sa période
-            if (current_task.period > current_task.execution_time):
+            if (current_task.period < current_task.execution_time):
                 next_task = current_task.get_next_task(task_list)
                 current_task.period -= next_task.execution_time
-                print("\tTask execution at {}%", current_task.execution_time/current_task.period * 100)
+                print("\tTask execution at {}%", (current_task.execution_time/current_task.period * 100))
                 current_task.execution_time = 0
                 continue
                 
@@ -130,7 +130,6 @@ if __name__ == '__main__':
                 task_to_run = next_task
                 # calcul du temps déjà exécuté pour la tâche actuelle
                 current_task.execution_time -= current_task.executed_time
-                current_task.period -= current_task.executed_time + next_task.execution_time
                 time.sleep(next_task.execution_time)
                 
         # Start task
