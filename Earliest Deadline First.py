@@ -54,7 +54,7 @@ class my_task():
             next_task_next_deadline = task.last_execution_time + datetime.timedelta(seconds=task.period)
             # Si la tâche a la priorité sur celle ci, elle est la prochaine
             if (next_task_next_deadline < current_task_next_deadline or
-                (next_task_next_deadline == current_task_next_deadline and task.priority > next_task.priority)):
+                (next_task_next_deadline == current_task_next_deadline and task.priority < next_task.priority)):
                 next_task = task
         return next_task
 
@@ -77,10 +77,10 @@ if __name__ == '__main__':
     # Instanciation of task objects
     #Remplissage des tâches dans un tableau à la suite
     task_list = []
-    task_list.append(my_task(name="Motors control", priority = 1, period = 10, execution_time = 1, last_execution = last_execution, executed_time = 0, max_execution_time = 1, max_period = 10)) 
-    task_list.append(my_task(name="Sensor acquisition", priority = 1, period = 10, execution_time = 1, last_execution = last_execution, executed_time = 0, max_execution_time = 1, max_period = 10))
-    task_list.append(my_task(name="Transmission system", priority = 3, period = 60, execution_time = 20, last_execution = last_execution, executed_time = 0,  max_execution_time = 20, max_period = 60))
-    task_list.append(my_task(name="Camera analaysis", priority = 2, period = 30, execution_time = 20, last_execution = last_execution, executed_time = 0,  max_execution_time = 20, max_period = 30))
+    task_list.append(my_task(name="Motors control", priority = 100, period = 10, execution_time = 1, last_execution = last_execution, executed_time = 0, max_execution_time = 1, max_period = 10)) 
+    task_list.append(my_task(name="Sensor acquisition", priority = 100, period = 10, execution_time = 1, last_execution = last_execution, executed_time = 0, max_execution_time = 1, max_period = 10))
+    task_list.append(my_task(name="Transmission system", priority = 1, period = 60, execution_time = 20, last_execution = last_execution, executed_time = 0,  max_execution_time = 20, max_period = 60))
+    task_list.append(my_task(name="Camera analaysis", priority = 10, period = 30, execution_time = 20, last_execution = last_execution, executed_time = 0,  max_execution_time = 20, max_period = 30))
     #Boucle infinie 
     while(1):
 
@@ -106,7 +106,7 @@ if __name__ == '__main__':
             if (current_task.period < current_task.execution_time):
                 next_task = current_task.get_next_task(task_list)
                 current_task.period -= next_task.execution_time
-                print("\tTask execution at {}%", (current_task.execution_time/current_task.period * 100))
+                print("\tTask execution at {}%".format(current_task.execution_time/current_task.period * 100))
                 current_task.execution_time = 0
                 continue
                 
@@ -125,7 +125,7 @@ if __name__ == '__main__':
                 task_to_run = current_task
             
             # si la priorité de la tâche suivante est plus importante et que la tâche va être interrompue
-            if (current_task.priority > next_task.priority):
+            if (current_task.priority < next_task.priority):
                 print("Preemption of {} over {}".format(task_to_run.name, next_task.name))
                 task_to_run = next_task
                 # calcul du temps déjà exécuté pour la tâche actuelle
