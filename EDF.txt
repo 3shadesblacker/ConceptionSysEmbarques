@@ -13,12 +13,9 @@ Scheduler tick : 20:28:53
 Scheduler tick : 20:30:08
 	Deadline for task Motors control : 20:30:18
 	Deadline for task Sensor acquisition : 20:30:18
-<__main__.my_task object at 0x7fca8d142460>
 
 Scheduler tick : 20:32:10
-<__main__.my_task object at 0x7f1e10a58e20>
 	Deadline for task Motors control : 20:32:20
-<__main__.my_task object at 0x7f1e109d1460>
 	Deadline for task Sensor acquisition : 20:32:20
 
 Scheduler tick : 20:33:32
