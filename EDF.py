@@ -126,7 +126,7 @@ if __name__ == '__main__':
             
             # si la priorité de la tâche suivante est plus importante et que la tâche va être interrompue
             if (current_task.priority < next_task.priority):
-                print("Preemption of {} over {}".format(task_to_run.name, next_task.name))
+                print("Preemption of {} over {}".format(current_task.name, next_task.name))
                 task_to_run = next_task
                 # calcul du temps déjà exécuté pour la tâche actuelle
                 current_task.execution_time -= current_task.executed_time
